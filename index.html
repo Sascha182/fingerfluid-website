@@ -6,22 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FINGER FLUID — brb, drying our nails</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Space+Mono:wght@400;700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg: #0a0a0a;
-      --white: #f0f0f0;
-      --accent: #c8ff00;
-      --pink: #ff3cac;
-      --blue: #00d4ff;
+      --cream: #f5f0e8;
+      --yellow: #ffe156;
+      --pink: #ff4f9a;
+      --teal: #3edbd3;
+      --orange: #ff6b35;
+      --lilac: #c4a1ff;
     }
 
     body {
       background: var(--bg);
-      color: var(--white);
-      font-family: 'Space Grotesk', monospace, sans-serif;
+      color: var(--cream);
+      font-family: 'Space Mono', monospace;
       min-height: 100vh;
       overflow-x: hidden;
       cursor: crosshair;
@@ -29,46 +31,44 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 2rem 1.5rem;
       position: relative;
     }
 
-    .drip {
+    .scribble-dot {
       position: fixed;
-      width: 10px;
-      height: 10px;
-      border-radius: 50% 50% 50% 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50% 40% 50% 45%;
       pointer-events: none;
       z-index: 9999;
-      animation: dripFall 1s ease-in forwards;
-      transform: rotate(-45deg);
+      animation: scribbleFade 0.8s ease-out forwards;
     }
 
-    @keyframes dripFall {
-      0% { opacity: 1; transform: rotate(-45deg) scale(1); }
-      50% { opacity: 0.7; transform: rotate(-45deg) scale(1.4) translateY(20px); }
-      100% { opacity: 0; transform: rotate(-45deg) scale(0.2) translateY(60px); }
+    @keyframes scribbleFade {
+      0% { opacity: 0.8; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.5; transform: scale(1.3) rotate(15deg); }
+      100% { opacity: 0; transform: scale(0.3) rotate(-10deg); }
     }
 
-    @keyframes jitter {
+    @keyframes wobble {
       0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      10% { transform: translate(-1px, 1px) rotate(-0.5deg); }
-      30% { transform: translate(1px, -1px) rotate(0.5deg); }
-      50% { transform: translate(-1px, 0px) rotate(-0.3deg); }
-      70% { transform: translate(1px, 1px) rotate(0.3deg); }
-      90% { transform: translate(0px, -1px) rotate(0deg); }
+      15% { transform: translate(-1px, 0.5px) rotate(-0.7deg); }
+      30% { transform: translate(0.5px, -1px) rotate(0.5deg); }
+      45% { transform: translate(-0.5px, 0.5px) rotate(-0.3deg); }
+      60% { transform: translate(1px, -0.5px) rotate(0.7deg); }
+      75% { transform: translate(-0.5px, -0.5px) rotate(-0.5deg); }
+      90% { transform: translate(0.5px, 1px) rotate(0.3deg); }
+    }
+
+    @keyframes wobbleSlow {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @keyframes glitch {
-      0%, 100% { text-shadow: 2px 0 var(--pink), -2px 0 var(--blue); }
-      25% { text-shadow: -2px 0 var(--pink), 2px 0 var(--blue); }
-      50% { text-shadow: 2px 2px var(--pink), -2px -2px var(--blue); }
-      75% { text-shadow: -1px 2px var(--pink), 1px -2px var(--blue); }
+      50% { transform: translateY(-6px); }
     }
 
     @keyframes blink {
@@ -81,8 +81,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    @keyframes charEntrance {
+      from { opacity: 0; transform: translateY(30px) rotate(-5deg) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+    }
+
     .container {
-      max-width: 700px;
+      max-width: 660px;
       width: 100%;
       text-align: center;
       z-index: 10;
@@ -92,79 +97,119 @@
       animation: slideUp 0.8s ease-out both;
     }
     .container > *:nth-child(1) { animation-delay: 0.1s; }
-    .container > *:nth-child(2) { animation-delay: 0.3s; }
-    .container > *:nth-child(3) { animation-delay: 0.5s; }
-    .container > *:nth-child(4) { animation-delay: 0.7s; }
-    .container > *:nth-child(5) { animation-delay: 0.9s; }
-    .container > *:nth-child(6) { animation-delay: 1.1s; }
-    .container > *:nth-child(7) { animation-delay: 1.3s; }
+    .container > *:nth-child(2) { animation-delay: 0.25s; }
+    .container > *:nth-child(3) { animation-delay: 0.4s; }
+    .container > *:nth-child(4) { animation-delay: 0.6s; }
+    .container > *:nth-child(5) { animation-delay: 0.8s; }
+    .container > *:nth-child(6) { animation-delay: 1.0s; }
+    .container > *:nth-child(7) { animation-delay: 1.2s; }
+    .container > *:nth-child(8) { animation-delay: 1.4s; }
 
-    .pretitle {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #666;
+    .character-wrap {
       margin-bottom: 1rem;
-      animation: jitter 0.3s infinite;
+      animation: charEntrance 1s ease-out 0.1s both !important;
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+    }
+
+    .character-wrap:hover .character {
+      animation: wobble 0.15s infinite;
+      filter: invert(1) drop-shadow(0 0 12px var(--pink));
+    }
+
+    .character {
+      width: clamp(160px, 30vw, 240px);
+      height: auto;
+      filter: invert(1);
+      animation: wobbleSlow 4s ease-in-out infinite;
+      transition: filter 0.3s;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .counter {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: var(--pink);
+      margin-top: 0.4rem;
+      min-height: 1.5rem;
+      transition: color 0.3s;
     }
 
     .brand {
-      font-size: clamp(3rem, 12vw, 7rem);
+      font-family: 'Caveat', cursive;
+      font-size: clamp(3.5rem, 14vw, 8rem);
       font-weight: 700;
-      line-height: 0.95;
-      letter-spacing: -3px;
+      line-height: 0.9;
+      letter-spacing: 2px;
       margin-bottom: 1.5rem;
-      animation: glitch 3s infinite;
-      transition: all 0.1s;
-    }
-
-    .brand:hover {
-      color: var(--accent);
-      animation: glitch 0.2s infinite;
-      cursor: crosshair;
+      color: var(--cream);
+      animation: wobble 0.4s infinite;
+      display: inline-block;
     }
 
     .tagline {
-      font-family: 'Space Mono', monospace;
-      font-size: clamp(1rem, 3vw, 1.3rem);
-      color: var(--accent);
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      color: var(--yellow);
       margin-bottom: 2.5rem;
-      line-height: 1.6;
+      line-height: 1.5;
+    }
+
+    .tagline .nail-emoji {
+      display: inline-block;
+      animation: float 2s ease-in-out infinite;
     }
 
     .wall-break {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.85rem;
-      color: #555;
-      line-height: 1.8;
+      background: #1a1a1a;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.9;
       margin-bottom: 2.5rem;
-      border: 1px dashed #333;
-      padding: 1.2rem;
-      border-radius: 4px;
+      padding: 1.5rem 1.4rem 1.3rem;
       position: relative;
       text-align: left;
+      transform: rotate(-0.8deg);
+      border: none;
+      box-shadow:
+        inset 0 0 0 2px #333,
+        4px 4px 0 #1a1a1a,
+        4px 4px 0 2px #333;
     }
 
     .wall-break::before {
-      content: '// dev notes — pls delete before launch';
+      content: '📌';
+      position: absolute;
+      top: -12px;
+      left: 16px;
+      font-size: 1.2rem;
+    }
+
+    .wall-break::after {
+      content: 'pls delete before launch';
       position: absolute;
       top: -10px;
-      left: 12px;
-      background: var(--bg);
-      padding: 0 6px;
-      font-size: 0.65rem;
-      color: #444;
-      letter-spacing: 1px;
+      right: 12px;
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem;
+      color: var(--pink);
+      transform: rotate(2deg);
     }
 
     .wall-break span.strike {
       text-decoration: line-through;
-      color: #444;
+      color: #555;
     }
 
     .wall-break span.hl {
-      color: var(--pink);
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    .wall-break span.teal {
+      color: var(--teal);
     }
 
     .email-section {
@@ -172,41 +217,46 @@
     }
 
     .email-section p {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.8rem;
-      color: #777;
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem;
+      color: #999;
       margin-bottom: 0.8rem;
     }
 
     .beehiiv-wrap {
-      max-width: 420px;
+      max-width: 440px;
       margin: 0 auto;
     }
 
     .footer-quip {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      color: #333;
+      font-size: 0.62rem;
+      color: #444;
       margin-top: 3rem;
-      line-height: 1.8;
+      line-height: 2;
     }
 
     .footer-quip .blink {
       animation: blink 1s step-end infinite;
     }
 
-    .nail-emoji {
-      display: inline-block;
-      animation: float 2s ease-in-out infinite;
+    .footer-quip .caveat {
+      font-family: 'Caveat', cursive;
+      font-size: 0.9rem;
+      color: #555;
     }
 
-    .counter {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      color: #333;
-      margin-top: 0.3rem;
-      min-height: 1rem;
-      transition: color 0.3s;
+    .squiggle {
+      display: block;
+      margin: 0 auto 1rem;
+      width: 120px;
+      height: 8px;
+    }
+
+    .squiggle path {
+      stroke: var(--pink);
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
     }
 
     .noise {
@@ -215,15 +265,22 @@
       width: 100%; height: 100%;
       pointer-events: none;
       z-index: 1;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
     }
 
     @media (max-width: 500px) {
       .wall-break {
         font-size: 0.75rem;
-        padding: 1rem 0.8rem;
+        padding: 1.2rem 1rem 1rem;
+        transform: rotate(-0.3deg);
+      }
+      .wall-break::after {
+        font-size: 0.7rem;
+      }
+      .brand {
+        letter-spacing: 0;
       }
     }
   </style>
@@ -234,10 +291,16 @@
 
 <div class="container">
 
-  <p class="pretitle">you found us early</p>
-
-  <h1 class="brand" id="brand" onclick="clickCount()">FINGER<br>FLUID</h1>
+  <div class="character-wrap" id="charWrap" onclick="clickCount()">
+    <img class="character" src="finger_fluid_spiky_transparent.png" alt="FINGER FLUID character" />
+  </div>
   <div class="counter" id="counter"></div>
+
+  <svg class="squiggle" viewBox="0 0 120 8">
+    <path d="M2 5 Q10 1, 20 5 T40 5 T60 5 T80 5 T100 5 T118 5" />
+  </svg>
+
+  <h1 class="brand">FINGER FLUID</h1>
 
   <p class="tagline">
     the website isn't ready yet.<br>
@@ -250,7 +313,7 @@
     our web developer is <span class="strike">crying</span> working on it.
     in the meantime, drop your email so we can notify you when we stop
     being a holding page and start being a <span class="hl">real website</span>
-    with <span class="strike">corporate synergy</span> actual cool stuff.
+    with <span class="strike">corporate synergy</span> <span class="teal">actual cool stuff.</span>
   </div>
 
   <div class="email-section">
@@ -263,35 +326,39 @@
 
   <p class="footer-quip">
     &copy; 2025 FINGER FLUID &mdash; a real company that makes real nail polish<br>
-    this page was made at 2am and it shows<span class="blink">_</span>
+    <span class="caveat">this page was drawn at 2am and it shows</span><span class="blink">_</span>
   </p>
 
 </div>
 
 <script>
-  const colors = ['#c8ff00', '#ff3cac', '#00d4ff', '#ff6b35', '#b967ff'];
-  let lastDrip = 0;
+  const colors = ['#ffe156', '#ff4f9a', '#3edbd3', '#ff6b35', '#c4a1ff'];
+  let lastDot = 0;
 
   document.addEventListener('mousemove', (e) => {
     const now = Date.now();
-    if (now - lastDrip < 60) return;
-    lastDrip = now;
+    if (now - lastDot < 70) return;
+    lastDot = now;
 
-    const drip = document.createElement('div');
-    drip.className = 'drip';
-    drip.style.left = e.clientX - 5 + 'px';
-    drip.style.top = e.clientY - 5 + 'px';
-    drip.style.background = colors[Math.floor(Math.random() * colors.length)];
-    document.body.appendChild(drip);
-    setTimeout(() => drip.remove(), 1000);
+    const dot = document.createElement('div');
+    dot.className = 'scribble-dot';
+    const size = 5 + Math.random() * 8;
+    dot.style.width = size + 'px';
+    dot.style.height = size + 'px';
+    dot.style.left = (e.clientX - size / 2 + (Math.random() - 0.5) * 6) + 'px';
+    dot.style.top = (e.clientY - size / 2 + (Math.random() - 0.5) * 6) + 'px';
+    dot.style.background = colors[Math.floor(Math.random() * colors.length)];
+    dot.style.borderRadius = `${40 + Math.random()*20}% ${40 + Math.random()*20}% ${40 + Math.random()*20}% ${40 + Math.random()*20}%`;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 800);
   });
 
   let clicks = 0;
   const messages = [
     '',
-    "yes, that's our name.",
-    'you can stop clicking now.',
-    'seriously.',
+    "yes, that's our mascot. no, they don't have a name yet.",
+    'you can stop poking them.',
+    'seriously. they bite.',
     'ok fine, keep going.',
     "this isn't an easter egg.",
     '...or is it?',
@@ -299,7 +366,7 @@
     'BUY OUR NAIL POLISH.',
     '💅💅💅💅💅💅💅💅💅',
     'ok we respect the dedication.',
-    'fine. promo code: STOPCLICKING',
+    'fine. promo code: STOPPOKING',
     'that code is fake btw.',
     'lol gottem.',
     'ok for real though, drop your email ↓',
@@ -311,7 +378,14 @@
     const el = document.getElementById('counter');
     const msg = clicks < messages.length ? messages[clicks] : messages[messages.length - 1];
     el.textContent = msg;
-    el.style.color = '#555';
+
+    const img = document.querySelector('.character');
+    img.style.transition = 'transform 0.1s';
+    img.style.transform = `rotate(${(Math.random() - 0.5) * 12}deg) scale(1.05)`;
+    setTimeout(() => {
+      img.style.transition = 'transform 0.4s ease';
+      img.style.transform = '';
+    }, 150);
   }
 </script>
 
